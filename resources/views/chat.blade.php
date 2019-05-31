@@ -11,22 +11,34 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="{{ asset('css/app.css')  }}">
+    <style>
+        .chat_list{
+            overflow: auto;
+            display: flex;
+            flex-direction: column-reverse;
+            height: 200px;
+        }
+    </style>
 
 </head>
 <body>
     <div class="container" id="app">
         <div class="row pt-2">
-            <ul class="list-group col-4 offset-4">
+            <div class="col-4 offset-4 ">
                 <li class="list-group-item active">Chat Room</li>
-                <li class="list-group-item">Dapibus ac facilisis in</li>
-                <li class="list-group-item">Morbi leo risus</li>
-                <li class="list-group-item">Porta ac consectetur ac</li>
-                <li class="list-group-item">Vestibulum at eros</li>
-                <input type="text" placeholder="Enter your message here..." class="form-control">
-            </ul>
+                <ul class="list-group chat_list">
+
+                    <message v-for="value in chat.message" name="message">@{{ value }}</message>
+
+                </ul>
+                <input @keyup.enter="send" v-model="message" type="text" placeholder="Enter your message here..." class="form-control">
+
+            </div>
+
 
         </div>
     </div>
+
 <script src="{{asset('js/app.js')}}"></script>
 </body>
 </html>
