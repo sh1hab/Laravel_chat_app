@@ -29,6 +29,7 @@ class ChatEventListener
      */
     public function handle(ChatEvent $event)
     {
-        //
+        dd($event);
+        return $event->message;
     }
 }

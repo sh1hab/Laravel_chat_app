@@ -18,7 +18,8 @@ Route::get('/', function () {
 //Route::view('/chat','chat');
 
 Route::get('/chat','ChatController@index')->name('chat.index');
+Route::get('/send','ChatController@send')->name('chat.send');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');

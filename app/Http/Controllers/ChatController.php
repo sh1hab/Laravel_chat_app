@@ -2,18 +2,36 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ChatEvent;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ChatController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('auth')->only(['index','send']);
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index(){
+
         return view('chat');
+    }
+
+    function send(){
+        $message='Hello Pusher';
+        $user=User::find(Auth::id());
+
+        Event( new ChatEvent($message, $user) );
+
+        dump('success');
+
     }
 
     /**
