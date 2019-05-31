@@ -1776,6 +1776,9 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     className: function className() {
       return 'list-group-item-' + this.color;
+    },
+    badgeClass: function badgeClass() {
+      return 'badge-' + this.color;
     }
   },
   mounted: function mounted() {
@@ -37092,7 +37095,7 @@ var render = function() {
       2
     ),
     _vm._v(" "),
-    _c("small", { staticClass: "badge float-right badge-success" }, [
+    _c("small", { staticClass: "badge float-right", class: _vm.badgeClass }, [
       _vm._v("You")
     ])
   ])

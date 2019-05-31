@@ -15,4 +15,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::view('/chat','chat');
+//Route::view('/chat','chat');
+
+Route::get('/chat','ChatController@index')->name('chat.index');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

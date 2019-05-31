@@ -2,7 +2,7 @@
 <template>
     <div>
         <li class="list-group-item" :class="className"><slot></slot></li>
-        <small class="badge float-right badge-success">You</small>
+        <small class="badge float-right" :class="badgeClass">You</small>
     </div>
 </template>
 
@@ -16,6 +16,10 @@
             className()
             {
                 return 'list-group-item-' + this.color;
+            },
+            badgeClass()
+            {
+                return 'badge-' + this.color;
             }
         },
 
