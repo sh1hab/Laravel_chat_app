@@ -9,23 +9,31 @@ window.Vue = require('vue');
 Vue.component('message', require('./components/Message.vue').default);
 
 
-const app = new Vue({
+let app;
+app = new Vue({
     el: '#app',
-    data:{
+    data: {
         message: '',
-        typing:0,
+        typing: 0,
         chat: {
-            message:[]
+            message: []
         }
     },
-    methods:{
-        send(){
-            if(this.message){
+    methods: {
+        send: function () {
+            if (this.message) {
                 this.chat.message.push(this.message);
                 console.log(this.message);
-                this.message='';
+                this.message = '';
             }
 
         }
+    },
+    mounted: function () {
+        Echo.private('chat')
+            .listen('ChatEvent', (e) => {
+                console.log(e);
+            });
+
     }
 });

@@ -59405,7 +59405,8 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
 Vue.component('message', __webpack_require__(/*! ./components/Message.vue */ "./resources/js/components/Message.vue")["default"]);
-var app = new Vue({
+var app;
+app = new Vue({
   el: '#app',
   data: {
     message: '',
@@ -59422,6 +59423,11 @@ var app = new Vue({
         this.message = '';
       }
     }
+  },
+  mounted: function mounted() {
+    Echo["private"]('chat').listen('ChatEvent', function (e) {
+      console.log(e);
+    });
   }
 });
 
@@ -59483,7 +59489,7 @@ if (token) {
 window.Pusher = __webpack_require__(/*! pusher-js */ "./node_modules/pusher-js/dist/web/pusher.js");
 window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   broadcaster: 'pusher',
-  key: "",
+  key: "13a3c711a171285efb8f",
   cluster: "mt1",
   encrypted: true
 });

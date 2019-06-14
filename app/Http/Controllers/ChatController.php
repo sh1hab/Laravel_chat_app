@@ -30,7 +30,7 @@ class ChatController extends Controller
 
         Event( new ChatEvent($message, $user) );
 
-        dump('success');
+
 
     }
 
