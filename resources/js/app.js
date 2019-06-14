@@ -2,6 +2,15 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+import Toaster from 'v-toaster';
+import 'v-toaster/dist/v-toaster.css';
+// optional set default imeout, the default is 10000 (10 seconds).
+Vue.use(Toaster, {timeout: 5000});
+
+import VueChatScroll from 'vue-chat-scroll'
+Vue.use(VueChatScroll);
+
+
 // const files = require.context('./', true, /\.vue$/i);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
@@ -74,16 +83,20 @@ app = new Vue({
 
             Echo.join(`chat`)
                 .here((users) => {
-                    console.debug(users);
+                    console.log(users);
                     this.users = users.length;
                 })
                 .joining((user) => {
-                    this.users =+ 1;
-                    console.log(user.name);
+                    ++this.users;
+                    // console.log(user.name+' joined chat');
+                    this.$toaster.success(user.name+' has joined chat');
+
                 })
                 .leaving((user) => {
-                    this.users =- 1;
-                    console.log(user.name);
+                    // console.log(user.name+' leaved chat');
+                    --this.users;
+                    this.$toaster.warning(user.name+' has leaved chat');
+
                 });
 
 

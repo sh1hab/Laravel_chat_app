@@ -13,9 +13,9 @@
     <link rel="stylesheet" href="{{ asset('css/app.css')  }}">
     <style>
         .chat_list {
-            overflow: auto;
-            display: flex;
-            flex-direction: column-reverse;
+            /*overflow: auto;*/
+            /*display: flex;*/
+            /*flex-direction: column-reverse;*/
             height: 200px;
         }
     </style>
@@ -28,7 +28,7 @@
             <li class="list-group-item active">Chat Room
                 <span class="badge-pill badge badge-danger">@{{ users }}</span>
             </li>
-            <ul class="list-group chat_list">
+            <ul class="list-group chat_list"  v-chat-scroll>
 
                 <message v-for="value,index in chat.message" name="message" :user=chat.user[index] :key=value.index
                          :color=chat.color[index]>@{{ value }}
