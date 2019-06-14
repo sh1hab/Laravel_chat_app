@@ -1772,7 +1772,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['color'],
+  props: ['user', 'color', 'timing'],
   computed: {
     className: function className() {
       return 'list-group-item-' + this.color;
@@ -47245,7 +47245,7 @@ var render = function() {
     ),
     _vm._v(" "),
     _c("small", { staticClass: "badge float-right", class: _vm.badgeClass }, [
-      _vm._v("You")
+      _vm._v(_vm._s(_vm.user))
     ])
   ])
 }
@@ -59410,23 +59410,70 @@ app = new Vue({
   el: '#app',
   data: {
     message: '',
-    typing: 0,
+    typing: '',
+    users: 0,
     chat: {
-      message: []
+      message: [],
+      user: [],
+      color: [],
+      timing: []
+    }
+  },
+  watch: {
+    message: function message() {
+      Echo["private"]('chat').whisper('typing', {
+        name: this.message
+      });
     }
   },
   methods: {
     send: function send() {
+      var _this = this;
+
       if (this.message) {
         this.chat.message.push(this.message);
-        console.log(this.message);
-        this.message = '';
+        this.chat.user.push('you');
+        this.chat.color.push('success');
+        this.chat.timing.push();
+        axios.post('/send', {
+          message: this.message,
+          user: 'you'
+        }).then(function (response) {
+          console.log(response, '32');
+          _this.message = '';
+        })["catch"](function (error) {
+          console.log(error);
+        });
       }
     }
   },
   mounted: function mounted() {
+    var _this2 = this;
+
     Echo["private"]('chat').listen('ChatEvent', function (e) {
-      console.log(e);
+      console.log(e, '47');
+
+      _this2.chat.message.push(e.message);
+
+      _this2.chat.user.push(e.user.name);
+
+      _this2.chat.color.push('warning');
+    }), Echo["private"]('chat').listenForWhisper('typing', function (e) {
+      if (e.name) {
+        _this2.typing = 'typing...';
+      } else {
+        _this2.typing = '';
+      }
+    });
+    Echo.join("chat").here(function (users) {
+      console.debug(users);
+      _this2.users = users.length;
+    }).joining(function (user) {
+      _this2.users = +1;
+      console.log(user.name);
+    }).leaving(function (user) {
+      _this2.users = -1;
+      console.log(user.name);
     });
   }
 });
